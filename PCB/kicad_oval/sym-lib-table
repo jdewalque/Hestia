@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "alert_button")(type "KiCad")(uri "${KIPRJMOD}/alert_button.kicad_sym")(options "")(descr "Project symbols"))
+)

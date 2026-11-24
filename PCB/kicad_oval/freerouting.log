@@ -1,0 +1,132 @@
+2026-11-16 17:41:38.179 INFO   Freerouting v2.5.0 (build-date: 2026-10-05)
+2026-11-16 17:41:38.216 WARN   [startup] freerouting.json contains a stale 'logging.file.location' value: '/Users/jeandewalque/Library/Logs/freerouting/kicad/freerouting.log'. The actual log file is being written to '/Users/jeandewalque/Library/CloudStorage/OneDrive-UCL/MÉMOIRE/PCB_fable/kicad/en/freerouting.log' (as resolved at startup). The stale value will be corrected in freerouting.json on next save. If you see this in Docker, the old JSON was written by an earlier version that stored the host path; the fix is to delete freerouting.json so it is regenerated with the correct path.
+2026-11-16 17:41:38.437 INFO   Hardware: 10 CPU cores, 428 CPU score, 6144 MB RAM
+2026-11-16 17:41:38.438 WARN   Deprecated settings path '-mp / --router.max_passes'; use '--router.autorouter.max_passes' instead. The old path will be removed in a future release.
+2026-11-16 17:41:38.439 WARN   GUI is disabled and you don't have a console available, so the only feedback from Freerouting is in the log.
+2026-11-16 17:41:39.473 WARN   Deprecated settings path 'router.max_passes'; use 'router.autorouter.max_passes' instead. The old path will be removed in a future release.
+2026-11-16 17:41:39.737 INFO   [B56CE0\FCD627] Loading board file 'alert_button_oval.dsn'...
+2026-11-16 17:41:39.869 INFO   [B56CE0\FCD627] Job 'B56CE0\FCD627' started at 2026-11-16T16:41:39.869531Z.
+2026-11-16 17:41:39.974 INFO   [B56CE0\FCD627] Pipeline thread limits: autorouter pass is single-threaded, optimizer.max_threads=9.
+2026-11-16 17:41:40.043 INFO   [B56CE0\FCD627] Fanout stage started on board 'e8b4551500e9b807ce139849508c089b' with 216 of 297 SMD pins needing fanout (81 already connected, 0 netless).
+2026-11-16 17:41:48.050 INFO   [B56CE0\FCD627] Fanout pass #1 on board '4528b842f7da6b91d86b2ae631396f02' completed in 7.95 seconds with 206 SMD pins fanouted, 0 not routed, 0 insert errors, +49 extra vias (0 SMD pins still to check in pass, ripup costs=100).
+2026-11-16 17:41:51.443 INFO   [B56CE0\FCD627] Fanout pass #2 on board '418c1b236f001dbde858450318a1081f' completed in 3.38 seconds with 48 SMD pins fanouted, 0 not routed, 0 insert errors, +12 extra vias (0 SMD pins still to check in pass, ripup costs=200).
+2026-11-16 17:41:53.087 INFO   [B56CE0\FCD627] Fanout pass #3 on board 'b5435fb566638fdb013586efdaf481a1' completed in 1.63 seconds with 24 SMD pins fanouted, 0 not routed, 0 insert errors, +1 extra via (0 SMD pins still to check in pass, ripup costs=300).
+2026-11-16 17:41:55.014 INFO   [B56CE0\FCD627] Fanout pass #4 on board 'f995efba42851bf93bc28e8140f95427' completed in 1.92 seconds with 27 SMD pins fanouted, 0 not routed, 0 insert errors, +3 extra vias (0 SMD pins still to check in pass, ripup costs=400).
+2026-11-16 17:41:55.843 INFO   [B56CE0\FCD627] Fanout pass #5 on board 'c5bb9fc0d1a88b5f3109381c6bc026e6' completed in 0.82 seconds with 20 SMD pins fanouted, 0 not routed, 0 insert errors, +0 extra vias (0 SMD pins still to check in pass, ripup costs=500).
+2026-11-16 17:41:56.650 INFO   [B56CE0\FCD627] Fanout pass #6 on board 'ca6a763dfce86a7caf1acc06eb8e9e50' completed in 0.80 seconds with 14 SMD pins fanouted, 0 not routed, 0 insert errors, +4 extra vias (0 SMD pins still to check in pass, ripup costs=600).
+2026-11-16 17:41:57.364 INFO   [B56CE0\FCD627] Fanout pass #7 on board '93dec41b52d2ddb5c261f161bcf07178' completed in 0.70 seconds with 8 SMD pins fanouted, 0 not routed, 0 insert errors, +1 extra via (0 SMD pins still to check in pass, ripup costs=700).
+2026-11-16 17:41:57.999 INFO   [B56CE0\FCD627] Fanout pass #8 on board '93dec41b52d2ddb5c261f161bcf07178' completed in 0.62 seconds with 7 SMD pins fanouted, 0 not routed, 0 insert errors, +0 extra vias (0 SMD pins still to check in pass, ripup costs=800).
+2026-11-16 17:41:58.142 INFO   [B56CE0\FCD627] Fanout stage completed: started with 297 total SMD pins, completed in 18.06 seconds, escaped pins: 216/297 (72.7%), using 17.35 total CPU seconds, 9.61 GB total allocated, and 208.5 MB peak heap usage.
+2026-11-16 17:41:58.660 INFO   [B56CE0\FCD627] Auto-routing stage started on board '93dec41b52d2ddb5c261f161bcf07178' with baseline score 762.45 for 31 unrouted items.
+2026-11-16 17:42:04.189 INFO   [B56CE0\FCD627] Auto-routing pass #1 on board '93dec41b52d2ddb5c261f161bcf07178' was completed in 5.34 seconds with score 908.05 (12 unrouted and 0 violations), using 23.07 CPU seconds and the job allocated 13.66 GB of memory so far.
+2026-11-16 17:42:05.594 INFO   [B56CE0\FCD627] Auto-routing pass #2 on board '3cf7ad8459e3b8968425b34b1d70c564' was completed in 1.25 seconds with score 931.03 (9 unrouted and 0 violations), using 24.05 CPU seconds and the job allocated 14.56 GB of memory so far.
+2026-11-16 17:42:06.258 INFO   [B56CE0\FCD627] Auto-routing pass #3 on board 'da3d64207509f84814a7661ed2e9dc94' was completed in 0.52 seconds with score 272.03 (103 unrouted and 0 violations), using 25.03 CPU seconds and the job allocated 15.48 GB of memory so far.
+2026-11-16 17:42:07.147 INFO   [B56CE0\FCD627] Auto-routing pass #4 on board '8a388dabfc5f1534b13c5676719bfce1' was completed in 0.86 seconds with score 356.32 (84 unrouted and 0 violations), using 26.00 CPU seconds and the job allocated 16.72 GB of memory so far.
+2026-11-16 17:42:07.982 INFO   [B56CE0\FCD627] Auto-routing pass #5 on board 'c4c8260a02b26ef8a4d9252429f3596a' was completed in 0.81 seconds with score 279.69 (101 unrouted and 0 violations), using 26.00 CPU seconds and the job allocated 16.72 GB of memory so far.
+2026-11-16 17:42:08.882 INFO   [B56CE0\FCD627] Auto-routing pass #6 on board '4808397d5a91db54677759a9f6ed8b72' was completed in 0.87 seconds with score 275.86 (102 unrouted and 0 violations), using 26.99 CPU seconds and the job allocated 18.05 GB of memory so far.
+2026-11-16 17:42:09.737 INFO   [B56CE0\FCD627] Auto-routing pass #7 on board 'f660b2b8b3e9d6689d00f5e826d02529' was completed in 0.83 seconds with score 279.69 (101 unrouted and 0 violations), using 27.97 CPU seconds and the job allocated 19.34 GB of memory so far.
+2026-11-16 17:42:10.692 INFO   [B56CE0\FCD627] Auto-routing pass #8 on board 'da3d64207509f84814a7661ed2e9dc94' was completed in 0.00 seconds with score 931.03 (9 unrouted and 0 violations), using 28.95 CPU seconds and the job allocated 20.57 GB of memory so far.
+2026-11-16 17:42:11.276 INFO   [B56CE0\FCD627] Auto-routing pass #9 on board 'da3d64207509f84814a7661ed2e9dc94' was completed in 0.58 seconds with score 283.52 (100 unrouted and 0 violations), using 29.93 CPU seconds and the job allocated 21.69 GB of memory so far.
+2026-11-16 17:42:11.929 INFO   [B56CE0\FCD627] Auto-routing pass #10 on board 'c2c1fd6b7c4e8101cb81d2def1541325' was completed in 0.63 seconds with score 356.32 (84 unrouted and 0 violations), using 29.93 CPU seconds and the job allocated 21.69 GB of memory so far.
+2026-11-16 17:42:12.516 INFO   [B56CE0\FCD627] Auto-routing pass #11 on board 'bd6c8dba4a372847bc028217db4d091e' was completed in 0.53 seconds with score 283.52 (100 unrouted and 0 violations), using 30.91 CPU seconds and the job allocated 23.14 GB of memory so far.
+2026-11-16 17:42:13.263 INFO   [B56CE0\FCD627] Auto-routing pass #12 on board 'da3d64207509f84814a7661ed2e9dc94' was completed in 0.00 seconds with score 931.03 (9 unrouted and 0 violations), using 31.88 CPU seconds and the job allocated 24.46 GB of memory so far.
+2026-11-16 17:42:13.805 INFO   [B56CE0\FCD627] Auto-routing pass #13 on board 'da3d64207509f84814a7661ed2e9dc94' was completed in 0.54 seconds with score 283.52 (100 unrouted and 0 violations), using 31.88 CPU seconds and the job allocated 24.46 GB of memory so far.
+2026-11-16 17:42:14.436 INFO   [B56CE0\FCD627] Auto-routing pass #14 on board '7cc476be21b014810c0ea8b2719381f5' was completed in 0.60 seconds with score 356.32 (84 unrouted and 0 violations), using 32.86 CPU seconds and the job allocated 25.87 GB of memory so far.
+2026-11-16 17:42:14.960 INFO   [B56CE0\FCD627] Auto-routing pass #15 on board 'fb6d59af03612947ae7a871503345b9a' was completed in 0.50 seconds with score 283.52 (100 unrouted and 0 violations), using 32.86 CPU seconds and the job allocated 25.87 GB of memory so far.
+2026-11-16 17:42:15.697 INFO   [B56CE0\FCD627] Auto-routing pass #16 on board 'da3d64207509f84814a7661ed2e9dc94' was completed in 0.00 seconds with score 931.03 (9 unrouted and 0 violations), using 33.85 CPU seconds and the job allocated 27.22 GB of memory so far.
+2026-11-16 17:42:16.255 INFO   [B56CE0\FCD627] Auto-routing pass #17 on board 'da3d64207509f84814a7661ed2e9dc94' was completed in 0.55 seconds with score 283.52 (100 unrouted and 0 violations), using 34.83 CPU seconds and the job allocated 28.46 GB of memory so far.
+2026-11-16 17:42:16.889 INFO   [B56CE0\FCD627] Auto-routing pass #18 on board '119328a863f5ea67b7e62c0baaf50693' was completed in 0.61 seconds with score 356.32 (84 unrouted and 0 violations), using 34.83 CPU seconds and the job allocated 28.46 GB of memory so far.
+2026-11-16 17:42:16.895 INFO   [B56CE0\FCD627] The router's best score (931.03) has not improved by more than 0.5 points since pass #8. Stopping the auto-router after 18 passes (9 items still unconnected).
+The following connections could not be routed -- please review your design (e.g. check pad clearances, trace width rules, and available routing space):
+  Net '/GND' (82 unrouted connections):
+    - U1-60  ->  U2-14
+    - U1-55  ->  SW1-2@1
+    - C5-2  ->  U3-5
+    - U1-40  ->  U1-41
+    - U2-38  ->  U2-37
+    - U2-39  ->  U2-38
+    - U2-40  ->  U2-39
+    - U2-41  ->  U2-40
+    - U2-41  ->  U2-42
+    - U2-42  ->  U2-43
+    - U2-43  ->  U2-44
+    - U2-44  ->  U2-45
+    - U2-45  ->  U2-46
+    - U2-46  ->  U2-47
+    - U2-47  ->  U2-48
+    - U2-2  ->  C3-2
+    - U5-1  ->  U2-49@2
+    - U2-39  ->  C12-2
+    - U1-15  ->  U1-13
+    - U1-34  ->  U1-36
+    - U1-36  ->  U1-38
+    - U2-53  ->  U2-48
+    - C9-2  ->  U2-49@2
+    - D3-2  ->  C8-2
+    - U1-76  ->  U2-51
+    - R2-2  ->  C13-2
+    - U1-41  ->  U1-43
+    - U3-11  ->  U3-4
+    - U1-30  ->  Z1-2
+    - U2-49@1  ->  U5-1
+    - C14-2  ->  MK1-3
+    - C6-2  ->  conductionarea
+    - C5-2  ->  C4-2
+    - Z5-2  ->  Z3-2
+    - U1-43  ->  U1-46
+    - U2-49@5  ->  U5-1
+    - U1-71  ->  U1-112
+    - C15-2  ->  U1-25
+    - U1-51  ->  SW1-2@1
+    - C1-2  ->  conductionarea
+    - C13-2  ->  U3-4
+    - C10-2  ->  C4-2
+    - D3-2  ->  C2-2
+    - U2-51  ->  U1-105
+    - U1-112  ->  SW1-2
+    - U1-1  ->  U2-51
+    - D3-2  ->  U1-15
+    - SW1-2  ->  U1-113
+    - U2-49@7  ->  U2-49@6
+    - U2-49@4  ->  U2-49@7
+    - Z1-2  ->  U1-34
+    - C12-2  ->  U2-49@6
+    - MK1-2  ->  MK1-3
+    - MK1-3  ->  C11-2
+    - U2-14  ->  U1-55
+    - U1-66  ->  U2-49@5
+    - U1-107  ->  U1-25
+    - conductionarea  ->  TP4-1
+    - U2-49@8  ->  U1-71
+    - U1-20  ->  C8-2
+    - U1-66  ->  U1-111
+    - TP2-1  ->  C11-2
+    - C1-2  ->  C2-2
+    - U1-25  ->  U1-30
+    - U1-71  ->  U1-76
+    - U1-46  ->  U1-51
+    - U1-111  ->  SW1-2@1
+    - U1-34  ->  U1-109
+    - R1-2  ->  U4-2
+    - C15-2  ->  U1-20
+    - TP14-1  ->  U2-52
+    - U1-1  ->  R1-2
+    - U2-11  ->  U1-60
+    - conductionarea  ->  C10-2
+    - conductionarea  ->  TP6-1
+    - U1-105  ->  U1-106
+    - U1-111  ->  U1-110
+    - J1-2  ->  J1-2@1
+    - U1-105  ->  U1-7
+    - C7-2  ->  U2-50
+    - J1-2  ->  Z5-2
+    - conductionarea  ->  TP2-1
+  Net '/RF_M1' (1 unrouted connection):
+    - Z3-1  ->  Z2-2
+  Net '/RF_ANT' (1 unrouted connection):
+    - J1-1  ->  TP5-1
+2026-11-16 17:42:17.286 INFO   [B56CE0\FCD627] Auto-routing stage completed: started with 171 unrouted nets, completed in 37.20 seconds, final score: 931.03 (9 unrouted and 0 violations), using 35.80 total CPU seconds, 29.85 GB total allocated, and 204.4 MB peak heap usage.
+2026-11-16 17:42:17.418 INFO   [B56CE0\FCD627] Skipping optimization stage: the board has 9 unrouted connection(s) (optimizer only runs on completely routed boards).
+2026-11-16 17:42:17.426 INFO   [B56CE0\FCD627] Job 'B56CE0\FCD627' finished with state: COMPLETED (elapsed: 37.56 seconds, finished at UTC: 2026-11-16T16:42:17.426248Z).
+2026-11-16 17:42:17.460 INFO   Saving output file '/Users/jeandewalque/Library/CloudStorage/OneDrive-UCL/MÉMOIRE/PCB_fable/kicad/../kicad_oval/alert_button_oval.ses' (SES)...
+2026-11-16 17:42:17.466 INFO   Successfully saved output file '/Users/jeandewalque/Library/CloudStorage/OneDrive-UCL/MÉMOIRE/PCB_fable/kicad/../kicad_oval/alert_button_oval.ses' (54704 bytes).

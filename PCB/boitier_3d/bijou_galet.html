@@ -1,0 +1,322 @@
+<title>Galet — plans du bijou</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: planche de bijoutier. Un rendu de face en tête, puis les plans cotés à l'échelle, puis les tableaux. */
+:root{
+  --bg:#12171d; --panel:#19212a; --line:#2c3743; --fg:#ece7da; --muted:#9aa5ae;
+  --gold:#d9b45a; --jade:#2f7d62; --jade-deep:#174a3a; --jade-light:#7cc9a8;
+  --pcb:#3f78c4; --dim:#8fb6d9; --warn:#e0a04a; --nacre:#eef3ee; --dark-part:#3a424b;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --bg:#edf0ee; --panel:#f8faf8; --line:#cfd8d3; --fg:#18221e; --muted:#5d6b66;
+  --gold:#8c6a17; --jade:#2c7a5e; --jade-deep:#1b5744; --jade-light:#6fbf9d;
+  --pcb:#2c62ad; --dim:#356a9c; --warn:#a8620f; --nacre:#ffffff; --dark-part:#59636c;
+  color-scheme:light; } }
+:root[data-theme="light"]{
+  --bg:#edf0ee; --panel:#f8faf8; --line:#cfd8d3; --fg:#18221e; --muted:#5d6b66;
+  --gold:#8c6a17; --jade:#2c7a5e; --jade-deep:#1b5744; --jade-light:#6fbf9d;
+  --pcb:#2c62ad; --dim:#356a9c; --warn:#a8620f; --nacre:#ffffff; --dark-part:#59636c;
+  color-scheme:light; }
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55}
+.wrap{max-width:1120px;margin:0 auto;padding-block:36px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:44px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(44px,8vw,72px);line-height:1;margin:6px 0 10px}
+h2{font-family:var(--display);font-weight:500;font-size:26px;margin:0 0 4px;text-wrap:balance}
+.lede{color:var(--muted);max-width:62ch;margin:0}
+.hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:32px;align-items:center}
+.hero figure{margin:0}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;margin:22px 0 0}
+.facts div{border-top:1px solid var(--line);padding-top:10px}
+.facts dt{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.facts dd{margin:2px 0 0;font-variant-numeric:tabular-nums}
+.facts dd b{font-family:var(--display);font-weight:500;font-size:22px}
+section > p{max-width:68ch;color:var(--muted);margin:0 0 16px}
+.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.plan{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:0;min-width:0}
+.plan.wide{grid-column:1 / -1}
+.plan figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.plan figcaption b{color:var(--fg);font-weight:600}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:var(--body);fill:var(--muted)}
+.t-dim{fill:var(--dim)} .t-fg{fill:var(--fg)} .t-gold{fill:var(--gold)}
+.s-dim{stroke:var(--dim);fill:none} .s-line{stroke:var(--line);fill:none} .s-fg{stroke:var(--fg);fill:none}
+.f-shell{fill:var(--jade)} .f-shell-deep{fill:var(--jade-deep)} .f-pcb{fill:var(--pcb)} .f-part{fill:var(--dark-part)}
+.f-gold{fill:var(--gold)} .s-gold{stroke:var(--gold);fill:none} .f-panel{fill:var(--panel)} .f-bg{fill:var(--bg)} .f-nacre{fill:var(--nacre)}
+.f-bat{fill:var(--muted)}
+.tablebox{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;text-align:left;padding:8px 12px 8px 0;border-bottom:1px solid var(--line)}
+td{padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 36px}
+.two > div{min-width:0}
+h3{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 6px}
+ul{margin:0;padding-left:18px} li{margin:4px 0}
+.note{border-left:3px solid var(--warn);padding:2px 0 2px 14px;color:var(--fg);max-width:70ch}
+.note b{color:var(--warn)}
+@media (max-width:760px){ .hero,.plans,.two{grid-template-columns:minmax(0,1fr)} }
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <figure>
+    <svg viewBox="-27 -34 54 62" role="img" aria-label="Rendu de face du pendentif Galet">
+      <defs>
+        <radialGradient id="jade" cx="35%" cy="28%" r="85%">
+          <stop offset="0" stop-color="#8fd6b6"/><stop offset=".45" stop-color="#2f8565"/><stop offset="1" stop-color="#123c2f"/>
+        </radialGradient>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#ffffff" stop-opacity=".75"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="or" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#f0d68a"/><stop offset=".5" stop-color="#b98f35"/><stop offset="1" stop-color="#e6c873"/>
+        </linearGradient>
+        <radialGradient id="btn" cx="40%" cy="35%" r="75%">
+          <stop offset="0" stop-color="#b9ead2"/><stop offset="1" stop-color="#3c9474"/>
+        </radialGradient>
+      </defs>
+      <!-- bélière en résine, dans la masse -->
+      <path d="M-3.5 -21.5 V-28 a3.5 3.5 0 0 1 7 0 V-21.5 Z M-1.7 -24.5 V-28 a1.7 1.7 0 0 1 3.4 0 V-24.5 Z" fill="url(#jade)" fill-rule="evenodd" stroke="url(#or)" stroke-width=".35"/>
+      <ellipse cx="0" cy="0" rx="17.5" ry="22.5" fill="url(#jade)"/>
+      <!-- veines -->
+      <path d="M-14 -6 C-6 -2 -2 6 -9 15" stroke="#bfe8d6" stroke-opacity=".28" stroke-width=".5" fill="none"/>
+      <path d="M-11 4 C-3 3 4 8 9 17" stroke="#bfe8d6" stroke-opacity=".2" stroke-width=".4" fill="none"/>
+      <!-- croissant de nacre -->
+      <path d="M12.5 -8 C17 4 13 16 -4 19.2 C7 14 12.5 6 12.5 -8 Z" fill="#f4f7f3" fill-opacity=".93"/>
+      <!-- lumière de la LED à travers la résine -->
+      <circle cx="0" cy="-10.5" r="4.2" fill="url(#glow)"/>
+      <!-- bouton cabochon -->
+      <circle cx="0" cy="-4.1" r="4.7" fill="#0e3327" fill-opacity=".55"/>
+      <circle cx="0" cy="-4.1" r="4.4" fill="url(#btn)"/>
+      <!-- contacts de charge -->
+      <circle cx="-10.4" cy="-3.8" r="1.15" fill="url(#or)"/><circle cx="10.4" cy="-3.8" r="1.15" fill="url(#or)"/>
+      <!-- micro -->
+      <circle cx="7.15" cy="-7.8" r=".5" fill="#0c241c"/>
+      <ellipse cx="0" cy="0" rx="17.5" ry="22.5" fill="none" stroke="url(#or)" stroke-width=".6"/>
+      <ellipse cx="-6" cy="-10" rx="5" ry="8" fill="#ffffff" fill-opacity=".09" transform="rotate(-18 -6 -10)"/>
+      <!-- légendes -->
+      <g font-size="1.45">
+        <line class="s-line" x1="4.4" y1="-4.1" x2="19.5" y2="-15" stroke-width=".15"/><text class="t-fg" x="19.8" y="-15.3" text-anchor="start" font-size="1.45">bouton</text>
+        <line class="s-line" x1="0" y1="-12.5" x2="-12" y2="-25" stroke-width=".15"/><text class="t-fg" x="-12.3" y="-25.4" text-anchor="end">LED sous la résine</text>
+        <line class="s-line" x1="-11.5" y1="-3.8" x2="-20" y2="-1" stroke-width=".15"/><text class="t-fg" x="-20.3" y="1" text-anchor="end">charge</text>
+        <line class="s-line" x1="7.6" y1="-7.8" x2="19.5" y2="-9" stroke-width=".15"/><text class="t-fg" x="19.8" y="-8.6" text-anchor="start">micro</text>
+        <line class="s-line" x1="10" y1="13" x2="19" y2="19" stroke-width=".15"/><text class="t-fg" x="19.3" y="19.5" text-anchor="start">nacre</text>
+      </g>
+      <!-- cote largeur -->
+      <g stroke-width=".15"><line class="s-dim" x1="-17.5" y1="25.5" x2="17.5" y2="25.5"/><line class="s-dim" x1="-17.5" y1="24.7" x2="-17.5" y2="26.3"/><line class="s-dim" x1="17.5" y1="24.7" x2="17.5" y2="26.3"/></g>
+      <text class="t-dim" x="0" y="27.6" text-anchor="middle" font-size="1.5">35 mm</text>
+    </svg>
+  </figure>
+  <div>
+    <div class="eyebrow">Pendentif · carte ovale 28 × 38 mm</div>
+    <h1>Galet</h1>
+    <p class="lede">Une pierre polie coulée en résine teinte jade. La carte ovale épouse la forme, l'antenne LTE court dans la paroi, et tout ce qui est conducteur reste petit et loin d'elle.</p>
+    <dl class="facts">
+      <div><dt>Extérieur</dt><dd><b>35 × 45 × 12</b> mm<br>53 mm avec la bélière</dd></div>
+      <div><dt>Cavité</dt><dd><b>31 × 41 × 10</b> mm<br>1,5 mm de jeu autour de la carte</dd></div>
+      <div><dt>Parois</dt><dd><b>2</b> mm sur le côté<br>1 mm au dos et en face avant</dd></div>
+      <div><dt>Masse estimée</dt><dd><b>≈ 15</b> g<br>résine 5 g, batterie 5 g, carte 4 g ; non pesé</dd></div>
+    </dl>
+  </div>
+</header>
+
+<section>
+  <h2>Plans cotés</h2>
+  <p>Les trois vues sont à la même échelle. Les positions du bouton, de la LED, des contacts de charge et du micro viennent du placement KiCad de la carte ovale.</p>
+  <div class="plans">
+
+    <figure class="plan">
+      <svg viewBox="-27 -34 54 64" role="img" aria-label="Vue intérieure : carte, antenne et batterie">
+        <!-- coque -->
+        <path d="M-3.5 -21.5 V-28 a3.5 3.5 0 0 1 7 0 V-21.5 Z M-1.7 -24.5 V-28 a1.7 1.7 0 0 1 3.4 0 V-24.5 Z" class="f-shell" fill-rule="evenodd"/>
+        <ellipse class="f-shell" cx="0" cy="0" rx="17.5" ry="22.5"/>
+        <ellipse class="f-bg" cx="0" cy="0" rx="15.5" ry="20.5"/>
+        <!-- carte -->
+        <ellipse class="f-pcb" cx="0" cy="0" rx="14" ry="19" fill-opacity=".55"/>
+        <!-- batterie (derrière) -->
+        <rect x="-10" y="-14" width="20" height="25" class="s-fg" stroke-width=".2" stroke-dasharray=".8 .6"/>
+        <!-- nRF9151 (derrière) -->
+        <rect x="-8.3" y="-9.5" width="12.1" height="11.1" class="s-fg" stroke-width=".2" stroke-dasharray=".3 .4"/>
+        <!-- module ESP32 : corps + zone d'antenne -->
+        <rect x="-6.6" y="-0.24" width="13.2" height="11.2" class="f-part"/>
+        <rect x="-6.6" y="10.96" width="13.2" height="5.4" class="f-part" fill-opacity=".45"/>
+        <!-- bouton, LED, contacts, micro -->
+        <rect x="-3.1" y="-7.2" width="6.2" height="6.2" class="f-part"/><circle cx="0" cy="-4.1" r="1.5" class="f-panel"/>
+        <rect x="-1" y="-11.1" width="2" height="1.25" class="f-nacre"/>
+        <circle cx="-10.4" cy="-3.8" r="1" class="f-gold"/><circle cx="10.4" cy="-3.8" r="1" class="f-gold"/>
+        <circle cx="7.15" cy="-7.8" r=".45" class="f-bg"/>
+        <!-- appuis -->
+        <g class="f-shell"><circle cx="-6.3" cy="-15.24" r="1.1"/><circle cx="6.3" cy="-15.24" r="1.1"/><circle cx="-6.3" cy="15.24" r="1.1"/><circle cx="6.3" cy="15.24" r="1.1"/></g>
+        <!-- ruban d'antenne LTE : 80 mm, du haut à droite jusqu'au milieu du flanc gauche -->
+        <path d="M5 -19.19 A15.3 20.3 0 1 1 -15.27 -1.26" class="s-gold" stroke-width=".8" stroke-linecap="round"/>
+        <!-- pastilles d'antenne et contact -->
+        <rect x="3.35" y="-15.85" width="1.5" height="1.5" class="f-gold"/>
+        <rect x="6.25" y="-13.55" width="1.5" height="1.5" class="f-nacre"/>
+        <line x1="4.1" y1="-15.85" x2="5" y2="-19.1" class="s-gold" stroke-width=".35"/>
+        <!-- légendes -->
+        <g font-size="1.4" stroke-width=".15">
+          <line class="s-line" x1="5.2" y1="-17.5" x2="19" y2="-27"/><text class="t-fg" x="19.2" y="-27.4">contact ressort</text>
+          <line class="s-line" x1="15.3" y1="6" x2="20.5" y2="9"/><text class="t-gold" x="20.8" y="9.5">ruban LTE</text><text x="20.8" y="11.3">80 mm</text>
+          <text class="t-fg" x="0" y="6.5" text-anchor="middle">module ESP32</text>
+          <text x="0" y="14.3" text-anchor="middle">antenne Wi-Fi</text>
+          <line class="s-line" x1="-10" y1="8" x2="-20.5" y2="14"/><text class="t-fg" x="-20.8" y="14.4" text-anchor="end">batterie</text><text x="-20.8" y="16.2" text-anchor="end">20 × 25</text>
+          <line class="s-line" x1="-12" y1="-17" x2="-19" y2="-24"/><text class="t-fg" x="-19.2" y="-24.4" text-anchor="end">32 mm sans</text><text x="-19.2" y="-22.6" text-anchor="end">antenne</text>
+        </g>
+        <!-- cotes -->
+        <g stroke-width=".15"><line class="s-dim" x1="-14" y1="24.5" x2="14" y2="24.5"/><line class="s-dim" x1="-14" y1="23.7" x2="-14" y2="25.3"/><line class="s-dim" x1="14" y1="23.7" x2="14" y2="25.3"/></g>
+        <text class="t-dim" x="0" y="26.6" text-anchor="middle" font-size="1.5">carte 28 mm · cavité 31 mm</text>
+      </svg>
+      <figcaption><b>Intérieur, vu de face.</b> En pointillés, ce qui est derrière la carte : batterie et nRF9151. Les quatre plots d'appui ne touchent pas la paroi, le ruban passe partout.</figcaption>
+    </figure>
+
+    <figure class="plan">
+      <svg viewBox="-27 -34 54 64" role="img" aria-label="Vue de dos">
+        <path d="M-3.5 -21.5 V-28 a3.5 3.5 0 0 1 7 0 V-21.5 Z M-1.7 -24.5 V-28 a1.7 1.7 0 0 1 3.4 0 V-24.5 Z" class="f-shell-deep" fill-rule="evenodd"/>
+        <ellipse class="f-shell-deep" cx="0" cy="0" rx="17.5" ry="22.5"/>
+        <ellipse cx="0" cy="0" rx="17.5" ry="22.5" class="s-gold" stroke-width=".4"/>
+        <ellipse cx="0" cy="0" rx="13" ry="18" class="s-line" stroke-width=".2" stroke-dasharray=".8 .8"/>
+        <text class="t-fg" x="0" y="-1" text-anchor="middle" font-size="1.6">zone de gravure</text>
+        <text x="0" y="1.4" text-anchor="middle" font-size="1.4">dos plein, sans ouverture</text>
+        <g stroke-width=".15">
+          <line class="s-dim" x1="21" y1="-22.5" x2="21" y2="22.5"/><line class="s-dim" x1="20.2" y1="-22.5" x2="21.8" y2="-22.5"/><line class="s-dim" x1="20.2" y1="22.5" x2="21.8" y2="22.5"/>
+          <line class="s-dim" x1="-21" y1="-31.5" x2="-21" y2="22.5"/><line class="s-dim" x1="-21.8" y1="-31.5" x2="-20.2" y2="-31.5"/><line class="s-dim" x1="-21.8" y1="22.5" x2="-20.2" y2="22.5"/>
+          <line class="s-dim" x1="-3.5" y1="-33" x2="3.5" y2="-33"/>
+        </g>
+        <text class="t-dim" x="22" y="0.5" font-size="1.5">45</text>
+        <text class="t-dim" x="-22" y="-4" text-anchor="end" font-size="1.5">54</text>
+        <text class="t-dim" x="5" y="-32.5" font-size="1.5">7</text>
+        <text x="0" y="26.6" text-anchor="middle" font-size="1.4">passage de cordon : 3,4 mm</text>
+      </svg>
+      <figcaption><b>Dos.</b> Fermé et lisse, côté peau. La bélière est coulée dans la résine, sans métal, parce qu'elle est à moins de 10 mm du départ d'antenne.</figcaption>
+    </figure>
+
+    <figure class="plan wide">
+      <svg viewBox="-30 -17 66 23" role="img" aria-label="Coupe longitudinale">
+        <!-- coque : galet de 45 x 12, rayon 4,5 -->
+        <rect x="-22.5" y="-12" width="45" height="12" rx="4.5" ry="4.5" class="f-shell"/>
+        <!-- bélière, centrée dans l'épaisseur -->
+        <rect x="21" y="-8" width="3.2" height="4" class="f-shell"/><rect x="28.6" y="-8" width="2.4" height="4" rx="1" class="f-shell"/>
+        <!-- cavité -->
+        <rect x="-20.5" y="-11" width="41" height="10" rx="1.2" class="f-bg"/>
+        <!-- plan de joint -->
+        <line x1="-22.5" y1="-8.3" x2="-20.5" y2="-8.3" class="s-fg" stroke-width=".15"/><line x1="20.5" y1="-8.3" x2="22.5" y2="-8.3" class="s-fg" stroke-width=".15"/>
+        <!-- batterie -->
+        <rect x="-11" y="-6.2" width="25" height="5" class="f-bat" fill-opacity=".55"/>
+        <!-- composants face B -->
+        <rect x="-1.6" y="-7.5" width="11.1" height="1.1" class="f-part"/>
+        <!-- carte -->
+        <rect x="-19" y="-8.3" width="38" height=".8" class="f-pcb"/>
+        <!-- module ESP32 -->
+        <rect x="-16.36" y="-10.7" width="16.6" height="2.4" class="f-part"/>
+        <!-- bouton + cabochon -->
+        <rect x="1" y="-10.8" width="6.2" height="2.5" class="f-part"/><rect x="2.6" y="-11.6" width="3" height=".8" class="f-part"/>
+        <rect x="-0.4" y="-12.05" width="9" height="1.1" rx=".4" class="f-nacre" fill-opacity=".85"/>
+        <!-- LED -->
+        <rect x="9.9" y="-9" width="1.25" height=".7" class="f-nacre"/>
+        <!-- appuis -->
+        <rect x="-16.3" y="-7.5" width="2.2" height="6.5" class="f-shell"/><rect x="14.1" y="-7.5" width="2.2" height="6.5" class="f-shell"/>
+        <!-- ruban d'antenne (en bas seulement : le haut est dans l'ouverture) -->
+        <rect x="-20.5" y="-6.2" width=".35" height="4" class="f-gold"/>
+        <!-- légendes -->
+        <g font-size="1.15" stroke-width=".12">
+          <text class="t-fg" x="1.5" y="-3.3" text-anchor="middle">batterie 5 mm</text>
+          <text class="t-fg" x="-8" y="-9.1" text-anchor="middle">module ESP32</text>
+          <line class="s-line" x1="4.1" y1="-12.1" x2="4.1" y2="-14.2"/><text class="t-fg" x="4.1" y="-14.6" text-anchor="middle">bouton</text>
+          <line class="s-line" x1="10.5" y1="-9" x2="13" y2="-14.2"/><text class="t-fg" x="13" y="-14.6" text-anchor="middle">LED</text>
+          <line class="s-line" x1="-20.3" y1="-4" x2="-25" y2="-14.2"/><text class="t-gold" x="-25" y="-14.6" text-anchor="middle">ruban LTE</text>
+          <line class="s-line" x1="19" y1="-7.9" x2="19" y2="-14.2"/><text class="t-fg" x="20" y="-14.6" text-anchor="middle">carte 0,8</text>
+          <text x="-22" y="-8.6" text-anchor="end">joint</text>
+          <text x="33" y="-5.5">bélière</text>
+        </g>
+        <!-- cotes -->
+        <g stroke-width=".12">
+          <line class="s-dim" x1="-22.5" y1="2.2" x2="22.5" y2="2.2"/><line class="s-dim" x1="-22.5" y1="1.6" x2="-22.5" y2="2.8"/><line class="s-dim" x1="22.5" y1="1.6" x2="22.5" y2="2.8"/>
+          <line class="s-dim" x1="-27" y1="-12" x2="-27" y2="0"/><line class="s-dim" x1="-27.6" y1="-12" x2="-26.4" y2="-12"/><line class="s-dim" x1="-27.6" y1="0" x2="-26.4" y2="0"/>
+        </g>
+        <text class="t-dim" x="0" y="4.2" text-anchor="middle" font-size="1.25">45 mm</text>
+        <text class="t-dim" x="-27.6" y="-5.6" text-anchor="end" font-size="1.25">12</text>
+      </svg>
+      <figcaption><b>Coupe dans la hauteur.</b> La bélière est à droite. Le dos et la paroi forment une cuvette ; la face avant se colle sur le plan de joint, au niveau du dessus de la carte.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <h2>Empilement dans l'épaisseur</h2>
+  <p>Du dos vers la face avant. Le total fait exactement 12 mm : il n'y a pas de marge.</p>
+  <div class="tablebox"><table>
+    <tr><th>Couche</th><th>Épaisseur</th><th>Remarque</th></tr>
+    <tr><td>Dos en résine</td><td class="n">1,0 mm</td><td>Minimum pour une résine coulée et polie ; plus fin, il marque au moindre choc</td></tr>
+    <tr><td>Batterie et isolant</td><td class="n">5,2 mm</td><td>Type LP502025, 20 × 25 mm. Épaisseur réelle à mesurer</td></tr>
+    <tr><td>Composants sous la carte</td><td class="n">1,3 mm</td><td>nRF9151 et alimentation</td></tr>
+    <tr><td>Carte</td><td class="n">0,8 mm</td><td>Ovale 28 × 38 mm</td></tr>
+    <tr><td>Module ESP32 et jeu</td><td class="n">2,7 mm</td><td>Le bouton, plus haut, se loge dans l'épaisseur de la face avant</td></tr>
+    <tr><td>Face avant en résine</td><td class="n">1,0 mm</td><td>Assez mince pour laisser passer la lumière de la LED</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <h2>Matériaux</h2>
+  <p>Le choix est dicté par les antennes : rien de conducteur le long du ruban LTE ni devant l'antenne Wi-Fi.</p>
+  <div class="tablebox"><table>
+    <tr><th>Pièce</th><th>Matériau</th><th>Effet sur la radio</th></tr>
+    <tr><td>Dos, paroi, bélière</td><td>Résine époxy coulée, teinte jade, polie</td><td>Faible. Sans paillettes, poudre ni feuille métallique</td></tr>
+    <tr><td>Face avant</td><td>Même résine, 1 mm, translucide</td><td>Faible</td></tr>
+    <tr><td>Bouton</td><td>Cabochon de 9 mm en résine plus claire, affleurant</td><td>Aucun</td></tr>
+    <tr><td>Croissant</td><td>Nacre mince, incrustée dans la face avant</td><td>A priori aucun ; à confirmer au réglage</td></tr>
+    <tr><td>Liseré doré</td><td>Métallisation non conductrice, ou peinture sans pigment métallique</td><td>Aucun si elle est vraiment non conductrice. Un vrai fil d'or ferait une boucle fermée autour de l'antenne</td></tr>
+    <tr><td>Contacts de charge</td><td>Deux pions dorés de 2 mm</td><td>Faible : petits et à 6 mm de la paroi</td></tr>
+    <tr><td>Lien</td><td>Cordon de soie ou cuir, 60 cm</td><td>Aucun. Une chaîne en métal passerait à quelques millimètres du départ d'antenne</td></tr>
+  </table></div>
+</section>
+
+<section class="two">
+  <div>
+    <h3>Antenne LTE</h3>
+    <ul>
+      <li>Ruban de cuivre ou circuit souple, 4 mm de haut, logé dans la paroi à hauteur de la batterie.</li>
+      <li>Départ en haut à droite, relié à la pastille d'antenne de la carte par un contact ressort.</li>
+      <li>80 mm de long : il descend le flanc droit, passe en bas et remonte jusqu'au milieu du flanc gauche.</li>
+      <li>32 mm sans antenne en haut à gauche.</li>
+      <li>Longueur à ajuster à l'analyseur de réseau, boîtier fermé et porté.</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Antenne Wi-Fi et Bluetooth</h3>
+    <ul>
+      <li>C'est celle du module ESP32, en bas de la carte, côté face avant.</li>
+      <li>Le ruban LTE passe à côté, 2 mm plus bas et 1,5 mm plus loin. Il peut réduire sa portée.</li>
+      <li>Le scan Wi-Fi et la configuration par téléphone se font à courte distance, donc c'est le compromis retenu.</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Fabrication</h3>
+    <ul>
+      <li>Maquette : impression 3D des fichiers du dossier, pour juger la taille en main.</li>
+      <li>Prototype : impression résine des deux pièces, ponçage et polissage.</li>
+      <li>Pièce finale : moule en silicone tiré du prototype, coulée en résine teintée.</li>
+      <li>Fermeture : face avant collée. Pour rouvrir, il faut la découper ; la batterie ne se remplace pas.</li>
+    </ul>
+  </div>
+  <div>
+    <h3>À modifier sur la carte</h3>
+    <ul>
+      <li>Les deux contacts de charge sont sur la face avant et restent visibles. Les passer au dos demande une nouvelle version de la carte.</li>
+      <li>La carte ovale est routée ; le tracé automatique reste à relire avant fabrication.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Ce qui n'est pas vérifié</h2>
+  <p class="note"><b>Rien de ceci n'a été simulé ni mesuré.</b> Les cotes viennent du modèle 3D et du placement KiCad ; les hauteurs de composants (module 2,4 mm, bouton 3,4 mm, nRF9151 1,1 mm) sont supposées. Le rendement de l'antenne, l'effet du corps et celui de la nacre ne se connaîtront qu'avec un prototype mesuré. Le mécanisme du bouton cabochon et son étanchéité restent à dessiner en détail.</p>
+</section>
+
+</div>
