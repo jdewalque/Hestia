@@ -1,2 +1,11 @@
 # Dossier de compilation du firmware
 /build/
+
+# Dossiers de compilation (firmware et autres)
+build/
+
+# Fichiers macOS
+.DS_Store
+
+# Sauvegardes automatiques de KiCad
+.history/
