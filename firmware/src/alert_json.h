@@ -27,6 +27,9 @@ enum alert_kind {
  *            "contacts":["+32470123456"],
  *            "position":{"lat":50.84673,"lon":4.35247,"accuracy":21}}}
  *
+ * Si la position vient d'un relevé mis en mémoire, elle porte en plus son âge
+ * en secondes : "position":{…,"age":420}.
+ *
  * @p position vaut NULL si le bijou n'a pas pu se localiser, @p battery est
  * négatif si le niveau est inconnu et @p ts_ms vaut 0 si l'heure est inconnue :
  * le champ correspondant est alors absent.

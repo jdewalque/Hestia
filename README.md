@@ -8,6 +8,7 @@ porteur par SMS à ses contacts. Prototype sur Thingy:91 X.
 - `server/` — serveur qui transforme les alertes reçues par nRF Cloud en SMS
   (voir `server/README.md`).
 - `docs/protocole-ble.md` — dialogue entre l'application et le bijou.
+- `docs/consommation.md` — consommation estimée et autonomie du bijou.
 
 ## Application
 

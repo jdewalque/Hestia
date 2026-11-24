@@ -137,22 +137,48 @@ static int format_coordinates(char *dst, size_t dst_len, const struct text_posit
 			lon < 0 ? "-" : "", labs(lon) / 100000, labs(lon) % 100000);
 }
 
+/* Écrit « 7 min », « 1 h 05 » ou « 2 j ». */
+static void format_age(char *dst, size_t dst_len, uint32_t age_s)
+{
+	unsigned long minutes = age_s / 60;
+
+	if (minutes < 1) {
+		snprintf(dst, dst_len, "moins d'une minute");
+	} else if (minutes < 60) {
+		snprintf(dst, dst_len, "%lu min", minutes);
+	} else if (minutes < 24 * 60) {
+		snprintf(dst, dst_len, "%lu h %02lu", minutes / 60, minutes % 60);
+	} else {
+		snprintf(dst, dst_len, "%lu j", minutes / (24 * 60));
+	}
+}
+
 static void append_position(char *dst, size_t dst_len, const struct text_position *pos)
 {
 	size_t len = strlen(dst);
 	char coordinates[32];
+	char margin[24];
+	char age[24];
 	long accuracy = (long)(pos->accuracy + 0.5f);
 
 	format_coordinates(coordinates, sizeof(coordinates), pos);
 
 	if (accuracy >= 1000) {
-		snprintf(dst + len, dst_len - len,
-			 "\nPosition (à environ %ld km près) : https://maps.google.com/?q=%s",
-			 (accuracy + 500) / 1000, coordinates);
+		snprintf(margin, sizeof(margin), "%ld km", (accuracy + 500) / 1000);
 	} else {
+		snprintf(margin, sizeof(margin), "%ld m", accuracy < 1 ? 1 : accuracy);
+	}
+
+	if (pos->age_s == 0) {
 		snprintf(dst + len, dst_len - len,
-			 "\nPosition (à environ %ld m près) : https://maps.google.com/?q=%s",
-			 accuracy < 1 ? 1 : accuracy, coordinates);
+			 "\nPosition (à environ %s près) : https://maps.google.com/?q=%s",
+			 margin, coordinates);
+	} else {
+		format_age(age, sizeof(age), pos->age_s);
+		snprintf(dst + len, dst_len - len,
+			 "\nDernière position connue, il y a %s (à environ %s près) : "
+			 "https://maps.google.com/?q=%s",
+			 age, margin, coordinates);
 	}
 }
 

@@ -4,6 +4,7 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #include "config.h"
 
@@ -16,6 +17,10 @@ struct text_position {
 	double longitude;
 	/* Marge d'erreur en mètres. */
 	float accuracy;
+	/* Âge de la position en secondes : 0 si elle est actuelle, sinon elle
+	 * vient du dernier relevé mis en mémoire.
+	 */
+	uint32_t age_s;
 };
 
 /*

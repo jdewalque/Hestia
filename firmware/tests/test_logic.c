@@ -3,6 +3,7 @@
  * reçus de l'application et rédaction des SMS. Voir run.sh.
  */
 #include <assert.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -100,8 +101,8 @@ static void test_latin9(void)
 static void test_sms(void)
 {
 	struct hestia_config cfg = {.name = "Marie", .message = "Marie a besoin d'aide."};
-	struct text_position brussels = {50.846734, 4.352468, 34.6f};
-	struct text_position south_west = {-33.86882, -0.5, 2400.0f};
+	struct text_position brussels = {50.846734, 4.352468, 34.6f, 0};
+	struct text_position south_west = {-33.86882, -0.5, 2400.0f, 0};
 	char sms[TEXT_SMS_LEN];
 
 	text_alert_sms(sms, sizeof(sms), &cfg, &brussels, false);
@@ -114,6 +115,24 @@ static void test_sms(void)
 		  "[TEST - pas d'urgence] Marie a besoin d'aide.\n"
 		  "Position (à environ 2 km près) : https://maps.google.com/?q=-33.86882,-0.50000");
 
+	/* Position tirée du dernier relevé mis en mémoire. */
+	brussels.age_s = 7 * 60 + 59;
+	text_alert_sms(sms, sizeof(sms), &cfg, &brussels, false);
+	check_str("position ancienne", sms,
+		  "Marie a besoin d'aide.\n"
+		  "Dernière position connue, il y a 7 min (à environ 35 m près) : "
+		  "https://maps.google.com/?q=50.84673,4.35247");
+	brussels.age_s = 30;
+	text_alert_sms(sms, sizeof(sms), &cfg, &brussels, false);
+	assert(strstr(sms, "il y a moins d'une minute (") != NULL);
+	brussels.age_s = 65 * 60;
+	text_alert_sms(sms, sizeof(sms), &cfg, &brussels, false);
+	assert(strstr(sms, "il y a 1 h 05 (") != NULL);
+	brussels.age_s = 3 * 24 * 3600 + 10;
+	text_alert_sms(sms, sizeof(sms), &cfg, &brussels, false);
+	assert(strstr(sms, "il y a 3 j (") != NULL);
+	brussels.age_s = 0;
+
 	text_alert_sms(sms, sizeof(sms), &cfg, NULL, false);
 	check_str("sans position", sms,
 		  "Marie a besoin d'aide.\nPosition inconnue pour le moment.");
@@ -124,9 +143,14 @@ static void test_sms(void)
 		  "Marie a appuyé sur son bouton d'urgence et a besoin d'aide.\n"
 		  "Position inconnue pour le moment.");
 
-	/* Le message le plus long possible tient dans le tampon avec la position. */
+	/* Le message le plus long possible tient dans le tampon avec la position,
+	 * même ancienne de plusieurs jours.
+	 */
 	memset(cfg.message, 'x', sizeof(cfg.message) - 1);
 	cfg.message[sizeof(cfg.message) - 1] = '\0';
+	text_alert_sms(sms, sizeof(sms), &cfg, &brussels, true);
+	assert(strstr(sms, "q=50.84673,4.35247") != NULL);
+	brussels.age_s = 999 * 24 * 3600;
 	text_alert_sms(sms, sizeof(sms), &cfg, &brussels, true);
 	assert(strstr(sms, "q=50.84673,4.35247") != NULL);
 }
@@ -149,7 +173,7 @@ static void test_cloud_message(void)
 		.contacts = {{.name = "Paul", .phone = "+32470123456"},
 			     {.name = "Zoé", .phone = "+33612345678"}},
 	};
-	struct text_position brussels = {50.846734, 4.352468, 20.6f};
+	struct text_position brussels = {50.846734, 4.352468, 20.6f, 0};
 	struct hestia_config longest;
 	cJSON *msg;
 	char *text;
@@ -161,6 +185,17 @@ static void test_cloud_message(void)
 		    "\"message\":\"Marie a besoin d'aide.\",\"battery\":82,"
 		    "\"contacts\":[\"+32470123456\",\"+33612345678\"],"
 		    "\"position\":{\"lat\":50.84673,\"lon\":4.35247,\"accuracy\":21}}}");
+
+	/* Position tirée du dernier relevé mis en mémoire : son âge s'ajoute. */
+	brussels.age_s = 420;
+	check_cloud("position ancienne",
+		    alert_json_build(ALERT_KIND_REAL, &cfg, &brussels, 82, 1700000000000),
+		    "{\"appId\":\"HESTIA_ALERT\",\"messageType\":\"DATA\",\"ts\":1700000000000,"
+		    "\"data\":{\"type\":\"real\",\"name\":\"Marie\","
+		    "\"message\":\"Marie a besoin d'aide.\",\"battery\":82,"
+		    "\"contacts\":[\"+32470123456\",\"+33612345678\"],"
+		    "\"position\":{\"lat\":50.84673,\"lon\":4.35247,\"accuracy\":21,"
+		    "\"age\":420}}}");
 
 	/* Sans position, sans batterie et sans heure : les champs sont absents. */
 	check_cloud("test sans position", alert_json_build(ALERT_KIND_TEST, &cfg, NULL, -1, 0),
@@ -179,6 +214,7 @@ static void test_cloud_message(void)
 	for (int i = 0; i < CFG_MAX_CONTACTS; i++) {
 		strcpy(longest.contacts[i].phone, "+123456789012345");
 	}
+	brussels.age_s = UINT32_MAX;
 	msg = alert_json_build(ALERT_KIND_REAL, &longest, &brussels, 100, 1700000000000);
 	text = cJSON_PrintUnformatted(msg);
 	assert(strlen(text) < 1024);

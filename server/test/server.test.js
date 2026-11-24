@@ -233,3 +233,21 @@ test('rédige les SMS', () => {
     /à environ 2 km près\) : https:\/\/maps\.google\.com\/\?q=-33\.86882,-0\.50000$/,
   );
 });
+
+test('signale une position ancienne et son âge', () => {
+  const old = parseAlert({ ...alertData, position: { ...alertData.position, age: 479 } });
+  assert.equal(old.position.age, 479);
+  assert.equal(
+    composeSms(old),
+    "Marie Dupont a besoin d'aide.\n" +
+      'Dernière position connue, il y a 7 min (à environ 21 m près) : ' +
+      'https://maps.google.com/?q=50.84673,4.35247',
+  );
+  const withAge = (age) => composeSms({ ...old, position: { ...old.position, age } });
+  assert.match(withAge(30), /il y a moins d'une minute \(/);
+  assert.match(withAge(65 * 60), /il y a 1 h 05 \(/);
+  assert.match(withAge(3 * 86400 + 10), /il y a 3 j \(/);
+  // Un âge absent ou invalide compte comme une position actuelle.
+  assert.equal(parseAlert(alertData).position.age, 0);
+  assert.equal(parseAlert({ ...alertData, position: { ...alertData.position, age: 'x' } }).position.age, 0);
+});

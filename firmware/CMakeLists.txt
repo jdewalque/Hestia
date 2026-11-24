@@ -12,6 +12,7 @@ target_sources(app PRIVATE
   src/config_json.c
   src/link.c
   src/net.c
+  src/position.c
   src/text.c
   src/ui.c
 )

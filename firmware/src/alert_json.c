@@ -57,7 +57,9 @@ cJSON *alert_json_build(enum alert_kind kind, const struct hestia_config *cfg,
 		    cJSON_AddNumberToObject(pos, "lat", round5(position->latitude)) == NULL ||
 		    cJSON_AddNumberToObject(pos, "lon", round5(position->longitude)) == NULL ||
 		    cJSON_AddNumberToObject(pos, "accuracy",
-					    round((double)position->accuracy)) == NULL) {
+					    round((double)position->accuracy)) == NULL ||
+		    (position->age_s > 0 &&
+		     cJSON_AddNumberToObject(pos, "age", position->age_s) == NULL)) {
 			goto fail;
 		}
 	}

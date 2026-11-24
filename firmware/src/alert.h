@@ -1,4 +1,4 @@
-/* Déroulement d'une alerte : localisation puis envoi des SMS. */
+/* Déroulement d'une alerte : localisation, puis envoi à nRF Cloud et par SMS. */
 #ifndef HESTIA_ALERT_H_
 #define HESTIA_ALERT_H_
 

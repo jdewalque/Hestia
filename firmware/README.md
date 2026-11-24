@@ -13,12 +13,15 @@ message viennent de l'application mobile, par Bluetooth.
 
 1. Maintenir le bouton 1,5 seconde (le voyant passe au bleu fixe dès l'appui,
    puis au rouge clignotant quand l'alerte part).
-2. Le bijou cherche sa position par Wi-Fi et antennes mobiles (30 secondes au
-   plus). Le GPS n'est pas utilisé.
+2. Le bijou cherche sa position par Wi-Fi et antennes mobiles. S'il ne trouve
+   rien, il se sert des derniers relevés gardés en mémoire (voir
+   « Localisation »). Le GPS n'est pas utilisé.
 3. Il envoie l'alerte par deux voies :
    - **nRF Cloud** d'abord (voir « Message envoyé à nRF Cloud ») ;
    - **SMS direct** à chaque contact ensuite, avec la position et sa marge
-     d'erreur, ou « Position inconnue pour le moment ».
+     d'erreur, ou « Position inconnue pour le moment ». Une position tirée
+     de la mémoire est annoncée comme telle : « Dernière position connue,
+     il y a 7 min (à environ 20 m près) : … ».
 
    L'alerte est réussie dès qu'une des deux voies fonctionne. Le voyant passe
    au vert dès que nRF Cloud a reçu l'alerte, sans attendre les SMS.
@@ -48,7 +51,9 @@ Un message d'appareil au format JSON, avec l'identifiant `HESTIA_ALERT` :
 
 - `type` : `real` (bouton) ou `test` (essai depuis l'application).
 - `position` est absent si le bijou n'a pas pu se localiser ; `accuracy` est la
-  marge d'erreur en mètres.
+  marge d'erreur en mètres. `age` (en secondes) n'apparaît que si la position
+  vient des relevés gardés en mémoire : elle date alors d'il y a `age`
+  secondes, par exemple `"position": {"lat": …, "lon": …, "accuracy": 21, "age": 420}`.
 - `battery` (en %) et `ts` (millisecondes depuis 1970) sont absents s'ils sont
   inconnus.
 - `contacts` : les numéros des contacts d'urgence, sans leurs noms. Le
@@ -72,7 +77,35 @@ nRF Cloud pousse ce message au serveur d'alertes, qui envoie les SMS : voir
 
 Le Wi-Fi ne donne qu'une liste de bornes visibles ; c'est nRF Cloud qui la
 convertit en coordonnées et les renvoie au bijou. Le bijou ne se connecte
-jamais à un réseau Wi-Fi, il ne fait que les écouter.
+jamais à un réseau Wi-Fi, il ne fait que les écouter. Il en va de même des
+antennes mobiles : le modem relève celles qui l'entourent, nRF Cloud en
+déduit une position, moins précise (souvent à quelques centaines de mètres
+ou quelques kilomètres près).
+
+**Relevés en mémoire.** Toutes les 5 minutes (la première fois 30 secondes
+après l'allumage), le bijou relève les bornes Wi-Fi et garde ce relevé en
+mémoire avec son heure. Rien n'est envoyé : seul le Wi-Fi s'allume, quelques
+secondes. Un relevé sans borne ne remplace pas le précédent. La mémoire est
+perdue si le bijou s'éteint. Les antennes mobiles ne sont pas mémorisées :
+l'alerte attend de toute façon le réseau mobile, donc elles sont relevées à
+ce moment-là.
+
+**Au moment de l'alerte**, le bijou relève les bornes Wi-Fi et les antennes
+(15 secondes au plus), puis demande à nRF Cloud de convertir, dans cet ordre,
+jusqu'à obtenir une position (20 secondes au plus en tout) :
+
+1. les bornes Wi-Fi actuelles ;
+2. les bornes Wi-Fi en mémoire, si elles ont moins de 30 minutes ;
+3. les antennes actuelles ;
+4. les bornes Wi-Fi en mémoire plus anciennes.
+
+Les positions 2 et 4 sont envoyées avec leur âge. Si nRF Cloud est
+injoignable, aucune conversion n'est possible : l'alerte part sans position.
+
+La bibliothèque de localisation de Nordic est réglée en « service externe »
+(`CONFIG_LOCATION_SERVICE_EXTERNAL`) : elle fait les relevés et les confie au
+firmware, qui décide seul quand les envoyer à nRF Cloud. Les durées et l'ordre
+ci-dessus se règlent en tête de `src/position.c`.
 
 Le Thingy doit être rattaché à votre compte nRF Cloud. Sinon, la connexion
 échoue avec `nrf_cloud_coap_connect` → -111 dans les journaux. Pour le
@@ -151,6 +184,7 @@ firmware/tests/run.sh ~/ncs/v3.4.2
 | `src/main.c` | Démarrage. |
 | `src/ui.c` | Bouton et voyant. |
 | `src/alert.c` | Déroulement d'une alerte : localisation, nRF Cloud, SMS. |
+| `src/position.c` | Relevés Wi-Fi et antennes, en arrière-plan et pendant l'alerte ; conversion en position. |
 | `src/alert_json.c` | Message d'alerte envoyé à nRF Cloud. |
 | `src/net.c` | Réseau mobile et session nRF Cloud. |
 | `src/link.c` | Dialogue avec l'application (lignes JSON sur UART0). |
@@ -165,7 +199,9 @@ firmware/tests/run.sh ~/ncs/v3.4.2
 - **Batterie estimée** d'après la tension : approximative, surtout pendant la
   charge ou quand le modem émet.
 - **Consommation non optimisée** : la liaison série avec le nRF5340 reste
-  active en permanence.
+  active en permanence. Les relevés Wi-Fi toutes les 5 minutes consomment
+  aussi. Estimation et pistes dans `docs/consommation.md` (environ 5 jours
+  sur une batterie de 250 mAh, rien n'est encore mesuré).
 - **Les numéros des contacts transitent par nRF Cloud**, dans chaque alerte.
 - **SMS directs** : ils demandent une carte SIM et un réseau qui acheminent les
   SMS. Avec la SIM Proximus essayée, le bijou n'est accepté qu'en NB-IoT, où

@@ -44,7 +44,14 @@ export function parseAlert(rawData) {
   const position =
     p && Number.isFinite(p.lat) && Number.isFinite(p.lon) &&
     Math.abs(p.lat) <= 90 && Math.abs(p.lon) <= 180
-      ? { lat: p.lat, lon: p.lon, accuracy: Number.isFinite(p.accuracy) ? p.accuracy : null }
+      ? {
+          lat: p.lat,
+          lon: p.lon,
+          accuracy: Number.isFinite(p.accuracy) ? p.accuracy : null,
+          // Âge en secondes si la position vient du dernier relevé mémorisé
+          // par le bijou ; 0 si elle est actuelle.
+          age: Number.isFinite(p.age) && p.age > 0 ? p.age : 0,
+        }
       : null;
 
   return {
@@ -71,15 +78,29 @@ export function extractAlerts(body) {
   return alerts;
 }
 
+/** « 7 min », « 1 h 05 » ou « 2 j », comme le bijou (firmware/src/text.c). */
+function formatAge(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 1) return "moins d'une minute";
+  if (minutes < 60) return `${minutes} min`;
+  if (minutes < 24 * 60) {
+    return `${Math.floor(minutes / 60)} h ${String(minutes % 60).padStart(2, '0')}`;
+  }
+  return `${Math.floor(minutes / (24 * 60))} j`;
+}
+
 function positionLine(position) {
   if (!position) return 'Position inconnue pour le moment.';
   const link = `https://maps.google.com/?q=${position.lat.toFixed(5)},${position.lon.toFixed(5)}`;
-  if (position.accuracy === null) return `Position : ${link}`;
+  const label = position.age
+    ? `Dernière position connue, il y a ${formatAge(position.age)}`
+    : 'Position';
+  if (position.accuracy === null) return `${label} : ${link}`;
   const margin =
     position.accuracy >= 1000
       ? `${Math.round(position.accuracy / 1000)} km`
       : `${Math.max(1, Math.round(position.accuracy))} m`;
-  return `Position (à environ ${margin} près) : ${link}`;
+  return `${label} (à environ ${margin} près) : ${link}`;
 }
 
 export function composeSms(alert) {

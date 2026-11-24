@@ -3,6 +3,8 @@
  *
  * Un appui maintenu sur le bouton localise le bijou (Wi-Fi, puis antennes)
  * et envoie un SMS avec la position aux contacts choisis dans l'application.
+ * Entre deux alertes, le bijou mémorise les bornes et antennes alentour, pour
+ * donner la dernière position connue s'il ne trouve rien au moment de l'alerte.
  */
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
@@ -11,6 +13,7 @@
 #include "config.h"
 #include "link.h"
 #include "net.h"
+#include "position.h"
 #include "ui.h"
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
@@ -29,6 +32,7 @@ int main(void)
 
 	if (net_init() == 0) {
 		(void)alert_init();
+		(void)position_init();
 	}
 
 	/* Ouvre la session nRF Cloud dès que le réseau est là, pour que la
