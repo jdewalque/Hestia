@@ -3,6 +3,8 @@
 Bijou connecté avec bouton d'urgence : une pression envoie la position du
 porteur par SMS à ses contacts. Prototype sur Thingy:91 X.
 
+- `docs/architecture.md` — **à lire en premier** : architecture, fonctionnement
+  et fonctionnalités, en résumé.
 - `app/` — application mobile (Flutter, Android et iPhone) pour régler le bijou.
 - `firmware/` — firmware du bijou pour le Thingy:91 X (voir `firmware/README.md`).
 - `server/` — serveur qui transforme les alertes reçues par nRF Cloud en SMS
